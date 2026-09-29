@@ -1,0 +1,1 @@
+Icons folder (icons are text glyphs by default)

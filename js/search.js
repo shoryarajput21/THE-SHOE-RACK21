@@ -1,0 +1,3 @@
+const Search={open(){showOv("so");$("#sq").focus()},
+find(q){q=q.toLowerCase().trim();return q?products.filter(p=>[p.name,p.category,p.sku,p.gender].some(v=>v.toLowerCase().includes(q))):[]}};
+document.addEventListener("DOMContentLoaded",()=>{$("#sq").addEventListener("input",e=>{const q=e.target.value,r=Search.find(q);$("#sr").innerHTML=!q.trim()?"":r.length?`<div class="grid">${r.slice(0,8).map(card).join("")}</div>`:`<p>No products found</p><a class="btn" href="${ROOT}shop.html">Continue shopping</a>`})});

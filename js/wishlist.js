@@ -1,0 +1,5 @@
+const Wish={list:()=>store.get("wish",[]),has:id=>Wish.list().includes(id),
+toggle(id){let l=Wish.list();const on=!l.includes(id);l=on?[...l,id]:l.filter(x=>x!==id);store.set("wish",l);toast(on?"Added to wishlist":"Removed from wishlist");$$(`[data-act=wish][data-id=${id}]`).forEach(b=>b.classList.toggle("on",on));updateCounts();Wish.render()},
+toCart(id){Cart.add(id);Wish.toggle(id)},
+render(){const g=$("#wl");if(!g)return;const ps=Wish.list().map(byId).filter(Boolean);g.innerHTML=ps.length?ps.map(p=>card(p).replace("</article>",`<button class="btn sm" data-act="mvc" data-id="${p.id}">Move to cart</button></article>`)).join(""):`<div class="empty"><p>Your wishlist is empty.</p><a class="btn" href="${ROOT}shop.html">Continue shopping</a></div>`}};
+document.addEventListener("DOMContentLoaded",Wish.render);

@@ -1,0 +1,12 @@
+function ShopInit(){$$("#grid,#grid2").forEach(initGrid)}function initGrid(g){const d=g.dataset,P=new URLSearchParams(location.search),shop="shop" in d;
+const F={q:P.get("q")||"",cat:P.get("cat")||"",gender:P.get("gender")||"",price:5000,size:"",color:"",rating:0,disc:0,sort:"",flag:P.get("flag")||d.flag||""};
+if(shop){const cats=[...new Set(products.map(p=>p.category))],sizes=[...new Set(products.flatMap(p=>p.sizes))].sort((a,b)=>a-b),cols=Object.keys(COLOR_HEX);
+const fill=(id,a)=>$(id).innerHTML='<option value="">All</option>'+a.map(x=>`<option>${x}</option>`).join("");fill("#f-cat",cats);fill("#f-size",sizes);fill("#f-color",cols);
+const map={q:"#f-q",cat:"#f-cat",gender:"#f-gender",price:"#f-price",size:"#f-size",color:"#f-color",rating:"#f-rating",disc:"#f-disc",sort:"#f-sort"};
+Object.entries(map).forEach(([k,s])=>{$(s).value=F[k];$(s).addEventListener("input",e=>{F[k]=["price","rating","disc"].includes(k)?+e.target.value:e.target.value;draw()})});
+$("#f-clear").onclick=()=>{Object.assign(F,{q:"",cat:"",gender:"",price:5000,size:"",color:"",rating:0,disc:0,sort:"",flag:""});Object.entries(map).forEach(([k,s])=>$(s).value=F[k]);draw()}}
+function list(){let l=products.filter(p=>(!F.q||Search.find(F.q).includes(p))&&(!(F.cat||d.cat)||p.category===(F.cat||d.cat))&&(!(F.gender||d.gender)||p.gender===(F.gender||d.gender)||(d.gender&&p.gender==="Unisex"))&&p.price<=F.price&&(!F.size||p.sizes.includes(+F.size))&&(!F.color||p.colors.includes(F.color))&&p.rating>=F.rating&&p.discount>=F.disc&&(F.flag!=="new"||p.isNew)&&(F.flag!=="best"||p.isBest)&&(F.flag!=="sale"||p.discount>=30));
+const s={pa:(a,b)=>a.price-b.price,pd:(a,b)=>b.price-a.price,rt:(a,b)=>b.rating-a.rating,best:(a,b)=>b.reviewCount-a.reviewCount,new:(a,b)=>b.isNew-a.isNew}[F.sort];if(s)l.sort(s);return l.slice(0,+d.limit||999)}
+function draw(){const l=list();g.innerHTML=l.length?l.map(card).join(""):'<div class="empty"><p>No products found</p><a class="btn" href="'+ROOT+'shop.html">Continue shopping</a></div>';const c=$("#count");if(c){c.textContent=l.length+" products";$("#pv").textContent=money(F.price)}}
+g.innerHTML=Array(4).fill('<div class="skel"></div>').join("");setTimeout(draw,250)}
+document.addEventListener("DOMContentLoaded",ShopInit);

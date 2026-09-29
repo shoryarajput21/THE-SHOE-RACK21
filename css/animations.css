@@ -1,0 +1,3 @@
+@keyframes pop{50%{transform:scale(1.4)}}@keyframes tin{from{opacity:0;transform:translateY(14px)}}@keyframes tout{to{opacity:0}}@keyframes sk{to{background-position:-200%}}@keyframes up{from{opacity:0;transform:translateY(24px)}}@keyframes fade{from{opacity:0}}
+body{animation:fade .5s}.hcopy>*{animation:up .8s both}.hcopy p{animation-delay:.12s}.hcopy .btns{animation-delay:.24s}.himg img{animation:fade 1.2s}.rvl{opacity:0;transform:translateY(20px);transition:.7s}.rvl.in{opacity:1;transform:none}.bump{animation:pop .4s}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rvl{opacity:1;transform:none}}@keyframes mq{to{transform:translateX(-50%)}}
